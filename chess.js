@@ -30,7 +30,14 @@ console.log(gridArray)
 for (let i = 0; i < gridArray.length; i++) {
     for (let j = 0; j < gridArray[i].length; j++) {
         if (i < 2) {
-            
+            let piece = new Piece("exists", "white")
+            let div = gridArray[i][j]
+            console.log(div)
+            div.appendChild(piece)
+        } else if (i > 6) {
+            let piece = new Piece("exists", "black")
+            let div = gridArray[i][j]
+            div.appendChild(piece)
         }
     }
 }

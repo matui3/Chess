@@ -1,3 +1,5 @@
+
+
 class Piece {
     constructor({
         position,
@@ -8,11 +10,13 @@ class Piece {
         this.captured = false;
     }
 
-    move() {
-        
-    }
+    // move() {
 
-    capture()
+    // }
+
+    // capture() {
+
+    // }
 }
 
 // class Pawn extends Piece {
