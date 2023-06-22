@@ -1,12 +1,19 @@
 # Class represents the state of the game, keeps track of turns as well as which player
 
-class Chess:
 
-    def __init__(self):
-        pass
+import pygame
+import numpy as np
 
-    def promotion(self):
-        pass
+pygame.init()
 
-    def player_turn(self):
-        pass
+screen = pygame.display.set_mode((800,800))
+pygame.display.set_caption('Chess')
+
+running = True
+
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            exit()
+
