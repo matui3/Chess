@@ -1,8 +1,8 @@
 # Class represents the state of the game, keeps track of turns as well as which player
-from .Board import Board
+from Board import Board
 
 import pygame
-from .ChessConstants import WIDTH, HEIGHT, SQUARE_SIZE
+from ChessConstants import WIDTH, HEIGHT, SQUARE_SIZE
 
 
 FPS = 60

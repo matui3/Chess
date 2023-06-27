@@ -1,4 +1,4 @@
-from .ChessConstants import SQUARE_SIZE
+from ChessConstants import SQUARE_SIZE
 
 class Piece:
 

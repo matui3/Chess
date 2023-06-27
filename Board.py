@@ -1,15 +1,13 @@
-from .Square import Square
-from .ChessConstants import ROWS, COLS, DARK, SQUARE_SIZE, LIGHT
+import Square
+from ChessConstants import ROWS, COLS, DARK, SQUARE_SIZE, LIGHT
 import pygame
-
-
 
 class Board:
 
     # this will represent configation of the board aka where pieces are
     # might do this on console first
 
-    def __init__(self, width, height):
+    def __init__(self):
         self.board = []
         # I will create a surface with the initialization of board
 
