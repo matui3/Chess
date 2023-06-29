@@ -8,13 +8,14 @@ class Piece:
         self.color = color
         self.x = 0
         self.y = 0
-
+        self.selected_square = None
         self.calc_pos()
+        
 
-    def position(self):
+    def calc_pos(self):
         self.x = SQUARE_SIZE * self.col + SQUARE_SIZE // 2
         self.y = SQUARE_SIZE * self.row + SQUARE_SIZE // 2
-    
+
     def valid_move(self):
         pass
 
@@ -23,4 +24,6 @@ class Piece:
         self.col = col
         self.calc_pos()
 
+    def __repr__(self):
+        return str(self.color)
     
