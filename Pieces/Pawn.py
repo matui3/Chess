@@ -23,9 +23,7 @@ class Pawn(Piece):
             win.blit(BLACK_PAWN, (self.x - BLACK_PAWN.get_width()//2, self.y - BLACK_PAWN.get_height()//2))
 
     def move(self, row, col):
-        self.row = row
-        self.col = col
-        self.calc_pos()
+        super().move(row, col)
 
     def __repr__(self):
-        return 'P'
+        return super().__repr__() + 'P'

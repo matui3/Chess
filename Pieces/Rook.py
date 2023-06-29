@@ -21,9 +21,7 @@ class Rook(Piece):
             win.blit(BLACK_ROOK, (self.x - BLACK_ROOK.get_width()//2, self.y - BLACK_ROOK.get_height()//2))
 
     def move(self, row, col):
-        self.row = row
-        self.col = col
-        self.calc_pos()
+        super().move(row, col)
 
     def __repr__(self):
-        return 'R'
+        return super().__repr__() + 'R'

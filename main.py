@@ -34,10 +34,9 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 row, col = get_row_col_from_mouse(pos)
-                square = board.get_square(row, col)   
-                print(square.get_piece())            
-            
-        
+                square = board.get_square(row, col)
+                print(square.get_piece())
+                         
         board.draw(WIN)
         pygame.display.update()
         clock.tick(FPS)
@@ -45,3 +44,4 @@ def main():
 if __name__ == "__main__":
     # board.draw(WIN)
     main()
+    

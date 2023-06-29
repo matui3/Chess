@@ -21,9 +21,7 @@ class King(Piece):
             win.blit(BLACK_KING, (self.x - BLACK_KING.get_width()//2, self.y - BLACK_KING.get_height()//2))
 
     def move(self, row, col):
-        self.row = row
-        self.col = col
-        self.calc_pos()
+        super().move(row, col)
 
     def __repr__(self):
-        return 'K'
+        return super().__repr__() + 'K'

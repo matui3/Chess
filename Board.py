@@ -6,6 +6,7 @@ from Pieces.King import King
 from Pieces.Bishop import Bishop
 from Square import Square
 from ChessConstants import ROWS, COLS, BLACK, SQUARE_SIZE, WHITE
+
 import pygame
 import sys
 sys.path.append('Pieces')
@@ -29,29 +30,21 @@ class Board:
                        [' ',' ',' ',' ',' ',' ',' ',' '],
                        ['P','P','P','P','P','P','P','P'],
                        ['R','N','B','Q','K','B','N','R']]
+        self.draw_squares()
+        self.set_up_board()
         
-        
-
-    def create_board(self):
-        for row in range(ROWS):
-            for col in range(COLS):
-                # insert algorithm to add pieces or squares
-                pass
 
     # is there a different way to draw this checkerboard
-    def draw_squares(self, win):
+    def draw_squares(self):
         for row in range(ROWS):
             self.board.append([])
             for col in range(COLS):
                 if row % 2 == 0 and col % 2 == 0:
                     self.board[row].append(Square(row, col, WHITE))
-                    self.board[row][col].draw(win)
                 elif row % 2 == 1 and col % 2 == 1:
                     self.board[row].append(Square(row, col, WHITE))
-                    self.board[row][col].draw(win)
                 else:
                     self.board[row].append(Square(row, col, BLACK))
-                    self.board[row][col].draw(win)
 
     def set_up_board(self):
         for row in range(ROWS):
@@ -87,15 +80,23 @@ class Board:
                         self.board[row][col].set_occupying_piece(King(row, col, WHITE))
 
     def draw(self, win):
-        self.draw_squares(win)
-        self.set_up_board()
         for row in range(ROWS):
             for col in range(COLS):
+                self.board[row][col].draw(win)
                 piece = self.board[row][col].get_piece()
                 if piece != None:
                     piece.draw(win)
 
-                    
+
+
+    def move(self, piece, row, col):
+        if self.board[row][col].get_piece() == None:
+            moved_piece = self.board[piece.row][piece.col].get_piece()
+            self.board[piece.row][piece.col] = None;
+            self.board[row][col].set_occupying_piece(moved_piece)
+            moved_piece.move(row, col)
+        
+
 
     def get_square(self, row, col):
         return self.board[row][col]

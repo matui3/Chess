@@ -16,13 +16,13 @@ class Piece:
         self.x = SQUARE_SIZE * self.col + SQUARE_SIZE // 2
         self.y = SQUARE_SIZE * self.row + SQUARE_SIZE // 2
 
-    def valid_move(self):
-        pass
-
     def move(self, row, col):
         self.row = row
         self.col = col
         self.calc_pos()
+
+    def valid_move(self):
+        pass
 
     def __repr__(self):
         return str(self.color)

@@ -21,9 +21,7 @@ class Knight(Piece):
             win.blit(BLACK_KNIGHT, (self.x - BLACK_KNIGHT.get_width()//2, self.y - BLACK_KNIGHT.get_height()//2))
 
     def move(self, row, col):
-        self.row = row
-        self.col = col
-        self.calc_pos()
+        super().move(row, col)
 
     def __repr__(self):
-        return 'N'
+        return super().__repr__() + 'N'
