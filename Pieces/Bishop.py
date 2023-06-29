@@ -9,8 +9,6 @@ class Bishop(Piece):
 
     def __init__(self, row, col, color):
         super().__init__(row, col, color)
-        self.x = 0
-        self.y = 0
 
     def calc_pos(self):
         super().calc_pos()
@@ -28,4 +26,4 @@ class Bishop(Piece):
         self.calc_pos()
 
     def __repr__(self):
-        return str(self.color)
+        return 'B'

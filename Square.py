@@ -23,14 +23,11 @@ class Square:
         elif self.color == BLACK:
             pygame.draw.rect(win, self.color, self.rect)
 
-        # if self.selected_piece != None:
-        #     pass
-            
-
+   
     def get_color(self):
         return self.color
     
-    def _set_occupying_piece(self, piece):
+    def set_occupying_piece(self, piece):
         self.occupying_piece = piece
 
     def get_piece(self):
