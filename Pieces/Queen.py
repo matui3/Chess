@@ -16,10 +16,7 @@ class Queen(Piece):
         
 
     def draw(self, win):
-        if self.color == WHITE:
-            win.blit(WHITE_QUEEN, (self.x - WHITE_QUEEN.get_width()//2, self.y - WHITE_QUEEN.get_height()//2))
-        else:
-            win.blit(BLACK_QUEEN, (self.x - BLACK_QUEEN.get_width()//2, self.y - BLACK_QUEEN.get_height()//2))
+        super().draw(win, WHITE_QUEEN, BLACK_QUEEN)
 
     def move(self, row, col):
         super().move(row, col)

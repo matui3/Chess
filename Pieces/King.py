@@ -15,11 +15,8 @@ class King(Piece):
         
 
     def draw(self, win):
-        if self.color == WHITE:
-            win.blit(WHITE_KING, (self.x - WHITE_KING.get_width()//2, self.y - WHITE_KING.get_height()//2))
-        else:
-            win.blit(BLACK_KING, (self.x - BLACK_KING.get_width()//2, self.y - BLACK_KING.get_height()//2))
-
+        super().draw(win, WHITE_KING, BLACK_KING)
+        
     def move(self, row, col):
         super().move(row, col)
 

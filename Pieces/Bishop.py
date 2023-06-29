@@ -15,10 +15,7 @@ class Bishop(Piece):
         
 
     def draw(self, win):
-        if self.color == WHITE:
-            win.blit(WHITE_BISHOP, (self.x - WHITE_BISHOP.get_width()//2, self.y - WHITE_BISHOP.get_height()//2))
-        else:
-            win.blit(BLACK_BISHOP, (self.x - BLACK_BISHOP.get_width()//2, self.y - BLACK_BISHOP.get_height()//2))
+        super().draw(win, WHITE_BISHOP, BLACK_BISHOP)
 
     def move(self, row, col):
         super().move(row, col)

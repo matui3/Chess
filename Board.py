@@ -83,11 +83,10 @@ class Board:
         for row in range(ROWS):
             for col in range(COLS):
                 self.board[row][col].draw(win)
-                piece = self.board[row][col].get_piece()
+                piece = self.board[row][col].occupying_piece
                 if piece != None:
+                    print(piece)
                     piece.draw(win)
-
-
 
     def move(self, piece, row, col):
         if self.board[row][col].get_piece() == None:
@@ -95,8 +94,6 @@ class Board:
             self.board[piece.row][piece.col] = None;
             self.board[row][col].set_occupying_piece(moved_piece)
             moved_piece.move(row, col)
-        
-
 
     def get_square(self, row, col):
         return self.board[row][col]

@@ -15,10 +15,7 @@ class Rook(Piece):
         
 
     def draw(self, win):
-        if self.color == WHITE:
-            win.blit(WHITE_ROOK, (self.x - WHITE_ROOK.get_width()//2, self.y - WHITE_ROOK.get_height()//2))
-        else:
-            win.blit(BLACK_ROOK, (self.x - BLACK_ROOK.get_width()//2, self.y - BLACK_ROOK.get_height()//2))
+        super().draw(win, WHITE_ROOK, BLACK_ROOK)
 
     def move(self, row, col):
         super().move(row, col)
