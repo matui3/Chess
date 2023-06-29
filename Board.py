@@ -30,12 +30,12 @@ class Board:
                        [' ',' ',' ',' ',' ',' ',' ',' '],
                        ['P','P','P','P','P','P','P','P'],
                        ['R','N','B','Q','K','B','N','R']]
-        self.draw_squares()
+        self.insert_squares()
         self.set_up_board()
         
 
     # is there a different way to draw this checkerboard
-    def draw_squares(self):
+    def insert_squares(self):
         for row in range(ROWS):
             self.board.append([])
             for col in range(COLS):
@@ -52,6 +52,7 @@ class Board:
                 if row == 0:
                     if self.config[row][col] == 'R':
                         self.board[row][col].set_occupying_piece(Rook(row, col, BLACK))
+                        
                     if self.config[row][col] == 'N':
                         self.board[row][col].set_occupying_piece(Knight(row, col, BLACK))
                     if self.config[row][col] == 'B':
@@ -80,13 +81,18 @@ class Board:
                         self.board[row][col].set_occupying_piece(King(row, col, WHITE))
 
     def draw(self, win):
+        
         for row in range(ROWS):
             for col in range(COLS):
                 self.board[row][col].draw(win)
-                piece = self.board[row][col].occupying_piece
+
+        for row in range(ROWS):
+            for col in range(COLS):
+                piece = self.board[row][col].get_piece()
                 if piece != None:
-                    print(piece)
                     piece.draw(win)
+
+                
 
     def move(self, piece, row, col):
         if self.board[row][col].get_piece() == None:
