@@ -20,5 +20,22 @@ class Rook(Piece):
     def move(self, row, col):
         super().move(row, col)
 
+    def valid_moves(self, board):
+        self.valid_moves = [] # this will store a row, col
+        # current pos is self.row, self.col
+        positions = board.board_state()
+        for col in range(self.col, 0, -1):
+            if positions[self.row][col].get_piece() == None:
+                break
+            else:
+                self.valid_moves.append((self.row, col))
+        return self.valid_moves
+
+
+
+                # only wnats the current colum and row the rook is in
+
+        
+
     def __repr__(self):
         return super().__repr__() + 'R'

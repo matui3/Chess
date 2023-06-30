@@ -8,7 +8,7 @@ class Square:
     def __init__(self, row, col, color):
         self.row = row
         self.col = col
-        self.occupying_piece = None
+        self._occupying_piece = None
         self.color = color
         self.rect = pygame.Rect(self.row * SQUARE_SIZE, self.col * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE)
 
@@ -28,10 +28,10 @@ class Square:
         return self.color
     
     def set_occupying_piece(self, piece):
-        self.occupying_piece = piece
+        self._occupying_piece = piece
 
     def get_piece(self):
-        return self.occupying_piece
+        return self._occupying_piece
         
                 
                

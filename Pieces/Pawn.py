@@ -21,6 +21,10 @@ class Pawn(Piece):
 
     def move(self, row, col):
         super().move(row, col)
+ 
+
+    def valid_move(self):
+        return super().valid_move()
 
     def __repr__(self):
         return super().__repr__() + 'P'

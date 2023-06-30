@@ -18,7 +18,7 @@ def get_row_col_from_mouse(pos):
     return row, col
 
 
-board = Board()
+chessboard = Board()
 
 
 def main():
@@ -34,14 +34,19 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 row, col = get_row_col_from_mouse(pos)
-                square = board.get_square(row, col)
-                print(square.get_piece())
+                square = chessboard.get_square(row, col)
+                moved_piece = square.get_piece()
+                moved_piece.valid_moves(chessboard)
+        
+                # finish this later for moving pieces
+                
+
                          
-        board.draw(WIN)
+        chessboard.draw(WIN)
         pygame.display.update()
         clock.tick(FPS)
+        
 
 if __name__ == "__main__":
-    # board.draw(WIN)
     main()
     

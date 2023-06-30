@@ -26,10 +26,7 @@ class Piece:
         self.row = row
         self.col = col
         self.calc_pos()
-
-    def valid_move(self):
-        pass
-
+        
     def __repr__(self):
         return str(self.color)
     

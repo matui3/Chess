@@ -92,14 +92,18 @@ class Board:
                 if piece != None:
                     piece.draw(win)
 
-                
+    # temporary function
+    def board_state(self):
+        return self.board
 
     def move(self, piece, row, col):
         if self.board[row][col].get_piece() == None:
             moved_piece = self.board[piece.row][piece.col].get_piece()
-            self.board[piece.row][piece.col] = None;
+            moved_piece.valid_moves(self)
+            self.board[piece.row][piece.col].set_occupying_piece(None)
             self.board[row][col].set_occupying_piece(moved_piece)
             moved_piece.move(row, col)
+
 
     def get_square(self, row, col):
         return self.board[row][col]
