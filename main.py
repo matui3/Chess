@@ -36,9 +36,9 @@ def main():
                 row, col = get_row_col_from_mouse(pos)
                 square = chessboard.get_square(row, col)
                 moved_piece = square.get_piece()
+                chessboard.move(moved_piece, 4, 4)
                 list_of_moves = moved_piece.valid_moves(chessboard)
                 print(list_of_moves)
-                list_of_moves = None
         
                 # finish this later for moving pieces
                 

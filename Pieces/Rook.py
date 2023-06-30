@@ -3,7 +3,7 @@ import sys
 sys.path.append('..')
 
 from Piece import Piece
-from ChessConstants import BLACK_ROOK, WHITE_ROOK, WHITE
+from ChessConstants import BLACK_ROOK, WHITE_ROOK, WHITE, COLS, ROWS
 
 class Rook(Piece):
 
@@ -21,15 +21,38 @@ class Rook(Piece):
         super().move(row, col)
 
     def valid_moves(self, board):
-        self.valid_moves = [] # this will store a row, col
+        valid_moves = [] # this will store a row, col
         # current pos is self.row, self.col
         positions = board.board_state()
-        for col in range(self.col, 0, -1):
-            if positions[self.row][col].get_piece() == None:
-                break
-            else:
-                self.valid_moves.append((self.row, col))
-        return self.valid_moves
+        if self.col > 0:
+            for col in range(self.col-1, -1, -1):
+                if positions[self.row][col].get_piece() != None:
+                    break
+                else:
+                    valid_moves.append((self.row, col))
+        if self.col < COLS:
+            for col in range(self.col+1, COLS, 1):
+                if positions[self.row][col].get_piece() != None:
+                    break
+                else:
+                    valid_moves.append((self.row, col))
+
+        if self.row > 0:
+            for row in range(self.row - 1, -1, -1):
+                if positions[row][self.col].get_piece() != None:
+                    break
+                else:
+                    valid_moves.append((row, self.col))
+
+        if self.row < ROWS:
+            for row in range(self.row + 1, ROWS, 1):
+                if positions[row][self.col].get_piece() != None:
+                    break
+                else:
+                    valid_moves.append((row, self.col))
+
+
+        return valid_moves
 
 
 

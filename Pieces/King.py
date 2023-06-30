@@ -3,7 +3,7 @@ import sys
 sys.path.append('..')
 
 from Piece import Piece
-from ChessConstants import BLACK_KING, WHITE_KING, WHITE
+from ChessConstants import BLACK_KING, WHITE_KING, WHITE, ROWS, COLS
 
 class King(Piece):
 
@@ -21,8 +21,43 @@ class King(Piece):
         super().move(row, col)
 
 
-    def valid_move(self):
-        return super().valid_move()
+    def valid_moves(self, board):
+        valid_moves = []
+        current_row = self.row
+        current_col = self.col
+        positions = board.board_state()
+        # check l/r of king
+        if current_col - 1 > -1:
+            if positions[current_row][current_col-1].get_piece() == None:
+                valid_moves.append((current_row, current_col-1))
+
+        if current_col + 1 < COLS:
+            if positions[current_row][current_col + 1].get_piece() == None:
+                valid_moves.append((current_row, current_col - 1))
+        
+        if current_row - 1 > -1:
+            if positions[current_row - 1][current_col].get_piece() == None:
+                valid_moves.append((current_row -1, current_col))
+        
+        if current_row + 1 < ROWS:
+            if positions[current_row + 1][current_col].get_piece() == None:
+                valid_moves.append((current_row + 1, current_col))
+
+        if current_row - 1 > -1 and current_col - 1 > -1:
+            if positions[current_row - 1][current_col - 1].get_piece() == None:
+                valid_moves.append((current_row - 1, current_col))
+
+        if current_row -1 > -1 and current_col + 1 < COLS:
+            if positions[current_row - 1][current_col + 1].get_piece() == None:
+                valid_moves.append((current_row -1, current_col + 1))
+
+        if current_row + 1 < ROWS and current_col - 1 > -1:
+            if positions[current_row + 1][current_col - 1].get_piece() == None:
+                valid_moves.append((current_row + 1, current_col - 1))
+
+        if current_row + 1 < ROWS and current_col + 1 < COLS:
+            if positions[current_row + 1][current_col + 1].get_piece() == None:
+                valid_moves.append((current_row + 1, current_col + 1))
 
     def __repr__(self):
         return super().__repr__() + 'K'
