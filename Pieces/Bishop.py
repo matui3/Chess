@@ -30,9 +30,10 @@ class Bishop(Piece):
         current_row = self.row
         while current_row-1 > -1 and current_col-1 > -1:
             if positions[current_row][current_col].get_piece() != None:
+                valid_moves.append((current_row, current_col))
                 break
             else:
-                valid_moves.append(current_row, current_col)
+                valid_moves.append((current_row, current_col))
             current_col -= 1
             current_row -= 1
             
@@ -42,9 +43,10 @@ class Bishop(Piece):
         current_row = self.row
         while  current_row-1 > -1 and current_col+1 < COLS:
             if positions[current_row][current_col].get_piece() != None:
+                valid_moves.append((current_row, current_col))
                 break
             else:
-                valid_moves.append(current_row, current_col)
+                valid_moves.append((current_row, current_col))
             current_col += 1
             current_row -= 1
         
@@ -53,9 +55,10 @@ class Bishop(Piece):
         current_row = self.row
         while current_row + 1 < ROWS and current_col + 1 < COLS:
             if positions[current_row][current_col].get_piece() != None:
+                valid_moves.append((current_row, current_col))
                 break
             else:
-                valid_moves.append(current_row, current_col)
+                valid_moves.append((current_row, current_col))
             current_col += 1
             current_row += 1
 
@@ -64,13 +67,14 @@ class Bishop(Piece):
         current_row = self.row
         while current_row +1 < ROWS and current_col -1 > -1:
             if positions[current_row][current_col].get_piece() != None:
+                valid_moves.append((current_row, current_col))
                 break
             else:
-                valid_moves.append(current_row, current_col)
+                valid_moves.append((current_row, current_col))
             current_col += 1
             current_row -= 1
 
         return valid_moves
 
     def __repr__(self):
-        return super().__repr__() + 'B'
+        return super().__repr__() + ' B'

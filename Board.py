@@ -52,7 +52,6 @@ class Board:
                 if row == 0:
                     if self.config[row][col] == 'R':
                         self.board[row][col].set_occupying_piece(Rook(row, col, BLACK))
-                        
                     if self.config[row][col] == 'N':
                         self.board[row][col].set_occupying_piece(Knight(row, col, BLACK))
                     if self.config[row][col] == 'B':
@@ -81,7 +80,6 @@ class Board:
                         self.board[row][col].set_occupying_piece(King(row, col, WHITE))
 
     def draw(self, win):
-        
         for row in range(ROWS):
             for col in range(COLS):
                 self.board[row][col].draw(win)
@@ -97,13 +95,16 @@ class Board:
         return self.board
 
     def move(self, piece, row, col):
-        if self.board[row][col].get_piece() == None:
-            moved_piece = self.board[piece.row][piece.col].get_piece()
-            moved_piece.valid_moves(self)
-            self.board[piece.row][piece.col].set_occupying_piece(None)
-            self.board[row][col].set_occupying_piece(moved_piece)
-            moved_piece.move(row, col)
-
+        moved_piece = self.board[piece.row][piece.col].get_piece()
+        self.board[piece.row][piece.col].set_occupying_piece(None)
+        self.board[row][col].set_occupying_piece(moved_piece)
+        moved_piece.move(row, col)
 
     def get_square(self, row, col):
         return self.board[row][col]
+    
+    def get_valid_moves(self, piece):
+        moves = piece.valid_moves(self)
+        return moves
+        
+

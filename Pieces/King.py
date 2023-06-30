@@ -30,10 +30,16 @@ class King(Piece):
         if current_col - 1 > -1:
             if positions[current_row][current_col-1].get_piece() == None:
                 valid_moves.append((current_row, current_col-1))
-
+            else:
+                valid_moves.append((current_row, current_col-1))
+                return;
+    
         if current_col + 1 < COLS:
             if positions[current_row][current_col + 1].get_piece() == None:
                 valid_moves.append((current_row, current_col - 1))
+            else:
+                valid_moves.append(current_row, current_col)
+                return;
         
         if current_row - 1 > -1:
             if positions[current_row - 1][current_col].get_piece() == None:
@@ -59,5 +65,7 @@ class King(Piece):
             if positions[current_row + 1][current_col + 1].get_piece() == None:
                 valid_moves.append((current_row + 1, current_col + 1))
 
+        return valid_moves
+
     def __repr__(self):
-        return super().__repr__() + 'K'
+        return super().__repr__() + ' K'

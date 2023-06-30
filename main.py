@@ -1,8 +1,9 @@
 # Class represents the state of the game, keeps track of turns as well as which player
 from Board import Board
+from Game import Game
 
 import pygame
-from ChessConstants import WIDTH, HEIGHT, SQUARE_SIZE
+from ChessConstants import WIDTH, HEIGHT, SQUARE_SIZE, WHITE, BLACK
 
 
 FPS = 60
@@ -18,12 +19,11 @@ def get_row_col_from_mouse(pos):
     return row, col
 
 
-chessboard = Board()
-
 
 def main():
     running = True
     clock = pygame.time.Clock()
+    game = Game(WIN)
 
     while running:
         for event in pygame.event.get():
@@ -34,18 +34,11 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 row, col = get_row_col_from_mouse(pos)
-                square = chessboard.get_square(row, col)
-                moved_piece = square.get_piece()
-                chessboard.move(moved_piece, 4, 4)
-                list_of_moves = moved_piece.valid_moves(chessboard)
-                print(list_of_moves)
-        
-                # finish this later for moving pieces
-                
+                if game.turn == WHITE:
+                    game.select(row, col)
 
                          
-        chessboard.draw(WIN)
-        pygame.display.update()
+        game.update()
         clock.tick(FPS)
         
 

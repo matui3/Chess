@@ -27,12 +27,14 @@ class Rook(Piece):
         if self.col > 0:
             for col in range(self.col-1, -1, -1):
                 if positions[self.row][col].get_piece() != None:
+                    valid_moves.append((self.row, col))
                     break
                 else:
                     valid_moves.append((self.row, col))
         if self.col < COLS:
             for col in range(self.col+1, COLS, 1):
                 if positions[self.row][col].get_piece() != None:
+                    valid_moves.append((self.row, col))
                     break
                 else:
                     valid_moves.append((self.row, col))
@@ -40,6 +42,7 @@ class Rook(Piece):
         if self.row > 0:
             for row in range(self.row - 1, -1, -1):
                 if positions[row][self.col].get_piece() != None:
+                    valid_moves.append((row, self.col))
                     break
                 else:
                     valid_moves.append((row, self.col))
@@ -47,18 +50,14 @@ class Rook(Piece):
         if self.row < ROWS:
             for row in range(self.row + 1, ROWS, 1):
                 if positions[row][self.col].get_piece() != None:
+                    valid_moves.append((row, self.col))
                     break
                 else:
                     valid_moves.append((row, self.col))
-
-
         return valid_moves
 
-
-
-                # only wnats the current colum and row the rook is in
 
         
 
     def __repr__(self):
-        return super().__repr__() + 'R'
+        return super().__repr__() + ' R'
