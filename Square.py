@@ -32,6 +32,9 @@ class Square:
 
     def get_piece(self):
         return self._occupying_piece
+    
+    def get_row_col(self):
+        return (self.row, self.col)
         
                 
                

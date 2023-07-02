@@ -9,6 +9,7 @@ class Knight(Piece):
 
     def __init__(self, row, col, color):
         super().__init__(row, col, color)
+        self.valid_moves = []
 
     def calc_pos(self):
         super().calc_pos()
@@ -36,14 +37,14 @@ class Knight(Piece):
                     valid_moves.append((current_row + 2, current_col - 1))
                 else:
                     valid_moves.append((current_row + 2, current_col - 1))
-                    return;
+                    
         
             if current_col + 1 < COLS:
                 if positions[current_row+2][current_col+1].get_piece() == None:
                     valid_moves.append((current_row + 2, current_col + 1))
                 else:
                     valid_moves.append((current_row + 2, current_col + 1))
-                    return;
+                    
 
         # check L/R of two above
         if current_row - 2 > -1:
@@ -52,14 +53,14 @@ class Knight(Piece):
                     valid_moves.append((current_row - 2, current_col - 1))
                 else:
                     valid_moves.append((current_row - 2, current_col - 1))
-                    return;
+                    
 
             if current_col + 1 < ROWS:
                 if positions[current_row - 2][current_col + 1].get_piece() == None:
                     valid_moves.append((current_row - 2, current_col + 1))
                 else:
                     valid_moves.append((current_row - 2, current_col + 1))
-                    return;
+                    
 
         # check up down of two to the left
         if current_col - 2 > -1:
@@ -68,14 +69,14 @@ class Knight(Piece):
                     valid_moves.append((current_row -1, current_col -2))
                 else:
                     valid_moves.append((current_row -1, current_col -2))
-                    return;
+                    
             
             if current_row + 1 < ROWS:
                 if positions[current_row + 1][current_col -2].get_piece() == None:
                     valid_moves.append((current_row + 1, current_col - 2))
                 else:
                     valid_moves.append((current_row + 1, current_col - 2))
-                    return;
+                    
 
         # check up/down of two to the right
         if current_col + 2 < COLS:
@@ -84,16 +85,62 @@ class Knight(Piece):
                     valid_moves.append((current_row - 1, current_col + 2))
                 else:
                     valid_moves.append((current_row - 1, current_col + 2))
-                    return;
+                    
 
             if current_row + 1 < ROWS:
                 if positions[current_row + 1][current_col + 2].get_piece() == None:
                     valid_moves.append((current_row + 1, current_col + 2))
                 else:
                     valid_moves.append((current_row + 1, current_col + 2))
-                    return;
-
+                    
+        
         return valid_moves
 
     def __repr__(self):
         return super().__repr__() + ' N'
+    
+    def attacking_moves(self, board):
+        attacking_moves = []
+        positions = board.board_state()
+        current_row = self.row
+        current_col = self.col
+
+        # check left/right of going two below
+        if current_row + 2 < ROWS:
+            if current_col - 1 > -1:
+                 attacking_moves.append((current_row + 2, current_col - 1))
+    
+            if current_col + 1 < COLS:
+                attacking_moves.append((current_row + 2, current_col + 1))
+                    
+
+        # check L/R of two above
+        if current_row - 2 > -1:
+            if current_col - 1 > -1:
+                attacking_moves.append((current_row - 2, current_col - 1))
+
+            if current_col + 1 < ROWS:
+                attacking_moves.append((current_row - 2, current_col + 1))
+                
+                    
+
+        # check up down of two to the left
+        if current_col - 2 > -1:
+            if current_row - 1 > -1:
+                attacking_moves.append((current_row -1, current_col -2))
+                    
+            
+            if current_row + 1 < ROWS:
+                attacking_moves.append((current_row + 1, current_col - 2))
+                    
+
+        # check up/down of two to the right
+        if current_col + 2 < COLS:
+            if current_row - 1 > - 1:
+                attacking_moves.append((current_row - 1, current_col + 2))
+                    
+
+            if current_row + 1 < ROWS:
+                attacking_moves.append((current_row + 1, current_col + 2))
+
+        return attacking_moves

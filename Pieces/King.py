@@ -9,6 +9,12 @@ class King(Piece):
 
     def __init__(self, row, col, color):
         super().__init__(row, col, color)
+        self.check = False
+        self.first_move = True
+        self.valid_moves = []
+    
+    def king_position(self):
+        return (self.row, self.col)
 
     def calc_pos(self):
         super().calc_pos()
@@ -18,6 +24,7 @@ class King(Piece):
         super().draw(win, WHITE_KING, BLACK_KING)
 
     def move(self, row, col):
+        self.first_move = False
         super().move(row, col)
 
 
@@ -32,14 +39,12 @@ class King(Piece):
                 valid_moves.append((current_row, current_col-1))
             else:
                 valid_moves.append((current_row, current_col-1))
-                return;
     
         if current_col + 1 < COLS:
             if positions[current_row][current_col + 1].get_piece() == None:
                 valid_moves.append((current_row, current_col - 1))
             else:
-                valid_moves.append(current_row, current_col)
-                return;
+                valid_moves.append((current_row, current_col))
         
         if current_row - 1 > -1:
             if positions[current_row - 1][current_col].get_piece() == None:
@@ -65,7 +70,14 @@ class King(Piece):
             if positions[current_row + 1][current_col + 1].get_piece() == None:
                 valid_moves.append((current_row + 1, current_col + 1))
 
+        # figuring out how to not put yourself in check
+        
+
         return valid_moves
 
     def __repr__(self):
         return super().__repr__() + ' K'
+    
+    def switch_check_status(self):
+        self.check = not self.check
+        return self.check

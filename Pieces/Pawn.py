@@ -5,13 +5,14 @@ sys.path.append('..')
 
 
 from Piece import Piece
-from ChessConstants import WHITE_PAWN, BLACK_PAWN, WHITE, BLACK, ROWS
+from ChessConstants import WHITE_PAWN, BLACK_PAWN, WHITE, BLACK, ROWS, COLS
 
 class Pawn(Piece):
 
     def __init__(self, row, col, color):
         super().__init__(row, col, color)
         self.first_move = True
+        self.valid_moves = []
 
     def calc_pos(self):
         super().calc_pos()
@@ -25,7 +26,6 @@ class Pawn(Piece):
  
 
     def valid_moves(self, board):
-
         positions = board.board_state()
         valid_moves = []
         if self.color == BLACK:
@@ -46,8 +46,24 @@ class Pawn(Piece):
                 if self.row + 1 < ROWS:
                     if positions[self.row - 1][self.col].get_piece() == None:
                         valid_moves.append((self.row - 1, self.col))
-            
+        if self.col + 1 < COLS and self.row - 1 > -1:
+            if positions[self.row - 1][self.col + 1].get_piece() != None:
+                valid_moves.append((self.row-1, self.col + 1))
+        if self.row - 1 > -1 and self.col - 1 > -1:
+            if positions[self.row - 1][self.col - 1].get_piece() != None:
+                valid_moves.append((self.row-1, self.col))
+
+
         return valid_moves
                         
     def __repr__(self):
         return super().__repr__() + ' P'
+    
+    def attacking_moves(self, board):
+        attacking_moves = []
+        if self.col + 1 < COLS and self.row - 1 > -1:
+            attacking_moves.append((self.row-1, self.col + 1))
+        if self.row - 1 > -1 and self.col - 1 > -1:
+            attacking_moves.append((self.row-1, self.col))
+
+        return attacking_moves

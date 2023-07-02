@@ -32,6 +32,9 @@ class Board:
                        ['R','N','B','Q','K','B','N','R']]
         self.insert_squares()
         self.set_up_board()
+        self.check = False
+        self.white_king = None
+        self.black_king = None
         
 
     # is there a different way to draw this checkerboard
@@ -47,6 +50,7 @@ class Board:
                     self.board[row].append(Square(row, col, BLACK))
 
     def set_up_board(self):
+        
         for row in range(ROWS):
             for col in range(COLS):
                 if row == 0:
@@ -59,7 +63,8 @@ class Board:
                     if self.config[row][col] == 'Q':
                         self.board[row][col].set_occupying_piece(Queen(row, col, BLACK))
                     if self.config[row][col] == 'K':
-                        self.board[row][col].set_occupying_piece(King(row, col, BLACK))
+                        self.black_king = King(row, col, BLACK)
+                        self.board[row][col].set_occupying_piece(self.black_king)
                 
                 if row == 1:
                     self.board[row][col].set_occupying_piece(Pawn(row, col, BLACK))
@@ -77,7 +82,8 @@ class Board:
                     if self.config[row][col] == 'Q':
                         self.board[row][col].set_occupying_piece(Queen(row, col, WHITE))
                     if self.config[row][col] == 'K':
-                        self.board[row][col].set_occupying_piece(King(row, col, WHITE))
+                        self.white_king = King(row, col, WHITE)
+                        self.board[row][col].set_occupying_piece(self.white_king)
 
     def draw(self, win):
         for row in range(ROWS):
@@ -106,5 +112,34 @@ class Board:
     def get_valid_moves(self, piece):
         moves = piece.valid_moves(self)
         return moves
-        
+    
+    def in_check(self):
+        white_king_pos = self.white_king.king_position()
+        black_king_pos = self.black_king.king_position()
+        if self.selected:
+            danger_spots = self.selected.attacking_moves()
+            self._no_pieces_to_check(white_king_pos, WHITE, self.white_king, danger_spots)
+            self._no_pieces_to_check(black_king_pos, BLACK, self.black_king, danger_spots)
 
+
+
+                
+            
+    def _no_pieces_to_check(self, king_pos, color, king, attacking_moves):       
+        
+        if self.turn == color:
+            for row, col in zip(attacking_moves):
+                piece = self.board[row][col].get_piece()
+                if piece == None:
+                    if king_pos in attacking_moves and king.color != self.selected.color:
+                        self.check = king.change_check_status()
+
+
+    def _checking_for_a_pin_for_valid_moves(self, attacking_moves, king_pos):
+        for row, col in zip(attacking_moves):
+            piece = self.board[row][col].get_piece()
+            if piece != None:
+                
+
+
+    def _discovery_checks(self):
