@@ -62,21 +62,31 @@ class Rook(Piece):
     def __repr__(self):
         return super().__repr__() + ' R'
     
-    def attacking_moves(self, board):
-        attacking_moves = [] # this will store a row, col
+    def attacking_moves_left(self):
+        attacking_moves = []
+        # this will store a row, col
         # current pos is self.row, self.col
-        positions = board.board_state()
         if self.col > 0:
             for col in range(self.col-1, -1, -1):
-                    attacking_moves.append((self.row, col))
+                attacking_moves.append((self.row, col))
+        return attacking_moves
+    
+    def attacking_moves_right(self):
+        attacking_moves = []
         if self.col < COLS:
             for col in range(self.col+1, COLS, 1):
                 attacking_moves.append((self.row, col))
-
+        return attacking_moves
+    
+    def attacking_moves_up(self):
+        attacking_moves = []
         if self.row > 0:
             for row in range(self.row - 1, -1, -1):
                 attacking_moves.append((row, self.col))
+        return attacking_moves
 
+    def attacking_moves_down(self):
+        attacking_moves = []
         if self.row < ROWS:
             for row in range(self.row + 1, ROWS, 1):
                 attacking_moves.append((row, self.col))

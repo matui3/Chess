@@ -121,25 +121,23 @@ class Board:
             self._no_pieces_to_check(white_king_pos, WHITE, self.white_king, danger_spots)
             self._no_pieces_to_check(black_king_pos, BLACK, self.black_king, danger_spots)
 
+            # need to add more to this
 
-
-                
             
-    def _no_pieces_to_check(self, king_pos, color, king, attacking_moves):       
-        
+    def _no_piece_obstacles_check(self, king_pos, color, king, attacking_moves):       
         if self.turn == color:
-            for row, col in zip(attacking_moves):
+            for row, col in enumerate(attacking_moves):
                 piece = self.board[row][col].get_piece()
                 if piece == None:
                     if king_pos in attacking_moves and king.color != self.selected.color:
                         self.check = king.change_check_status()
 
 
-    def _checking_for_a_pin_for_valid_moves(self, attacking_moves, king_pos):
-        for row, col in zip(attacking_moves):
+    def _absolute_pin_for_valid_moves(self, attacking_moves, king_pos):
+        for row, col in enumerate(attacking_moves):
             piece = self.board[row][col].get_piece()
-            if piece != None:
-                
+            if piece != None and type(piece) != type(self.black_king) and king_pos in attacking_moves:
+                return True 
+        
 
-
-    def _discovery_checks(self):
+    def _discovery_checks(self, piece_prev_pos, attacking_moves):

@@ -88,15 +88,19 @@ class Bishop(Piece):
     def __repr__(self):
         return super().__repr__() + ' B'
     
-    def attacking_moves(self, board):
+    def attacking_moves_up_left_diagonal(self):
         attacking_moves = []
-        positions = board.board_state()
         current_col = self.col - 1
         current_row = self.row - 1
         while current_row > -1 and current_col > -1:
             attacking_moves.append((current_row, current_col))
             current_col -= 1
-            current_row -= 1  
+            current_row -= 1
+
+        return attacking_moves
+    
+    def attacking_moves_up_right_diagonal(self):
+        attacking_moves = []
         # reset current_col counter
         # diagonal for going up-right
         current_col = self.col + 1
@@ -105,6 +109,10 @@ class Bishop(Piece):
             attacking_moves.append((current_row, current_col))
             current_col += 1
             current_row -= 1
+        return attacking_moves
+    
+    def attacking_moves_down_right_diagonal(self):
+        attacking_moves = []
         # diagonal for going down-right
         current_col = self.col + 1
         current_row = self.row + 1
@@ -112,6 +120,10 @@ class Bishop(Piece):
             attacking_moves.append((current_row, current_col))
             current_col += 1
             current_row += 1
+        return attacking_moves
+    
+    def attacking_moves_down_left_diagonal(self):
+        attacking_moves = []
         # diagonal for going down-left
         current_col = self.col - 1
         current_row = self.row + 1
