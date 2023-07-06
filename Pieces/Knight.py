@@ -7,8 +7,8 @@ from ChessConstants import BLACK_KNIGHT, WHITE_KNIGHT, WHITE, ROWS, COLS
 
 class Knight(Piece):
 
-    def __init__(self, row, col, color):
-        super().__init__(row, col, color)
+    def __init__(self, square, color):
+        super().__init__(square, color)
         self.valid_moves = []
 
     def calc_pos(self):

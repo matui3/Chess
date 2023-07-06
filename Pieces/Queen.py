@@ -4,15 +4,14 @@ import sys
 sys.path.append('..')
 
 from Piece import Piece
-from King import King
 from ChessConstants import BLACK_QUEEN, WHITE_QUEEN, WHITE, ROWS, COLS
-from Bishop import Bishop
-from Rook import Rook
+from .Bishop import Bishop
+from .Rook import Rook
 
 class Queen(Piece):
 
-    def __init__(self, row, col, color):
-        super().__init__(row, col, color)
+    def __init__(self, square, color):
+        super().__init__(square, color)
 
     def calc_pos(self):
         super().calc_pos()

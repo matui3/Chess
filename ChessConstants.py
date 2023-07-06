@@ -10,6 +10,8 @@ COLOR1 = (100, 249, 83)
 COLOR2 = (0, 228, 10)
 
 
+FILES = 'ABCDEFGH'
+
 BLACK_BISHOP = pygame.transform.scale(pygame.image.load('imgs\\Black Bishop.png'), (80, 80))
 BLACK_KING = pygame.transform.scale(pygame.image.load('imgs\\Black King.png'), (80, 80))
 BLACK_KNIGHT = pygame.transform.scale(pygame.image.load('imgs\\Black Knight.png'), (80, 80))

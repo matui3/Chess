@@ -9,8 +9,8 @@ from ChessConstants import WHITE_PAWN, BLACK_PAWN, WHITE, BLACK, ROWS, COLS
 
 class Pawn(Piece):
 
-    def __init__(self, row, col, color):
-        super().__init__(row, col, color)
+    def __init__(self, square, color):
+        super().__init__(square, color)
         self.first_move = True
         self.valid_moves = []
 

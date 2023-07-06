@@ -1,7 +1,7 @@
 # plan create a square in every single spot on the board
 
 import pygame
-from ChessConstants import WHITE, BLACK, ROWS, COLS, SQUARE_SIZE
+from ChessConstants import WHITE, BLACK, SQUARE_SIZE, FILES
 
 class Square:
 
@@ -11,11 +11,14 @@ class Square:
         self._occupying_piece = None
         self.color = color
         self.rect = pygame.Rect(self.row * SQUARE_SIZE, self.col * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE)
+        self.name = self.set_square_name(row, col)
 
+    def set_square_name(self, row, col):
+        return FILES[col] + str(row + 1)
     
     def get_coord(self):
         columns = 'ABCDEFGH'
-        return columns[self.x] + str(self.y + 1)
+        return columns[self.col] + str(self.row + 1)
     
     def draw(self, win):
         if self.color == WHITE:

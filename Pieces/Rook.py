@@ -7,13 +7,12 @@ from ChessConstants import BLACK_ROOK, WHITE_ROOK, WHITE, COLS, ROWS
 
 class Rook(Piece):
 
-    def __init__(self, row, col, color):
-        super().__init__(row, col, color)
+    def __init__(self, square, color):
+        super().__init__(square, color)
 
     def calc_pos(self):
         super().calc_pos()
         
-
     def draw(self, win):
         super().draw(win, WHITE_ROOK, BLACK_ROOK)
 

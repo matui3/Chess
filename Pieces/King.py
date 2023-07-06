@@ -7,8 +7,8 @@ from ChessConstants import BLACK_KING, WHITE_KING, WHITE, ROWS, COLS
 
 class King(Piece):
 
-    def __init__(self, row, col, color):
-        super().__init__(row, col, color)
+    def __init__(self, square, color):
+        super().__init__(square, color)
         self.check = False
         self.first_move = True
         self.valid_moves = []

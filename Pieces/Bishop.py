@@ -4,12 +4,12 @@ sys.path.append('..')
 
 from Piece import Piece
 from ChessConstants import BLACK_BISHOP, WHITE_BISHOP, WHITE, BLACK, COLS, ROWS
-from King import King
+from .King import King
 
 class Bishop(Piece):
 
-    def __init__(self, row, col, color):
-        super().__init__(row, col, color)
+    def __init__(self, square,  color):
+        super().__init__(square, color)
         self.valid_moves = []
 
     def calc_pos(self):

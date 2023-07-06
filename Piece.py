@@ -2,15 +2,13 @@ from ChessConstants import SQUARE_SIZE, WHITE
 
 class Piece:
 
-    def __init__(self, row, col, color):
-        self.row = row
-        self.col = col
+    def __init__(self, square, color):
+        self.square = square
         self.color = color
         self.x = 0
         self.y = 0
         self.selected_square = None
         self.calc_pos()
-        
 
     def calc_pos(self):
         self.x = SQUARE_SIZE * self.col + SQUARE_SIZE // 2
@@ -22,11 +20,17 @@ class Piece:
         else:
             win.blit(black, (self.x - black.get_width()//2, self.y - black.get_height()//2))
 
-    def move(self, row, col):
-        self.row = row
-        self.col = col
+    def move(self, old_square, new_square):
+        self.old_square = old_square
+        self.new_square = new_square
         self.calc_pos()
-        
+
+    def get_square(self):
+        return self.square
+    
+    def update_name(self, new_square):
+        self.square = new_square
+
     def __repr__(self):
         return str(self.color)
     
