@@ -43,11 +43,10 @@ class Board:
     # is there a different way to draw this checkerboard
 
     def create_squares_for_board(self):
-        file = 'ABCDEFGH'
         row = 0
         for rank in range(8, 0, -1):
             col = 0
-            for letter in file:
+            for letter in FILES:
                 name = letter + str(rank)
                 if row % 2 == 0 and col % 2 == 0:
                     self.list_of_squares[name] = Square(row, col, WHITE)
@@ -70,6 +69,7 @@ class Board:
                 self.board[row].append(squares[idx])
                 idx += 1
 
+
     def set_up_board(self):
         self.board[0][0].set_occupying_piece(Rook(self.list_of_squares['A8'], BLACK))
         self.board[0][1].set_occupying_piece(Knight(self.list_of_squares['B8'], BLACK))
@@ -82,14 +82,14 @@ class Board:
 
         
         for col in range(COLS):
-            white_pawn_square = '{}7'.format(FILES[col])
-            black_pawn_square = '{}2'.format(FILES[col])
+            white_pawn_square = '{}2'.format(FILES[col])
+            black_pawn_square = '{}7'.format(FILES[col])
             self.board[1][col].set_occupying_piece(Pawn(self.list_of_squares[black_pawn_square], BLACK))
             self.board[6][col].set_occupying_piece(Pawn(self.list_of_squares[white_pawn_square], WHITE))
 
         self.board[7][0].set_occupying_piece(Rook(self.list_of_squares['A1'], WHITE))
         self.board[7][1].set_occupying_piece(Knight(self.list_of_squares['B1'], WHITE))
-        self.board[7][2].set_occupying_piece(Bishop(self.list['C1'], WHITE))
+        self.board[7][2].set_occupying_piece(Bishop(self.list_of_squares['C1'], WHITE))
         self.board[7][3].set_occupying_piece(Queen(self.list_of_squares['D1'], WHITE))
         self.board[7][4].set_occupying_piece(King(self.list_of_squares['E1'], WHITE))
         self.board[7][5].set_occupying_piece(Bishop(self.list_of_squares['F1'], WHITE))
@@ -111,17 +111,17 @@ class Board:
     def board_state(self):
         return self.board
 
-    def move(self, piece, old_square, new_square):
-        moved_piece = self.board[piece.row][piece.col].get_piece()
-        self.board[piece.row][piece.col].set_occupying_piece(None)
-        self.board[row][col].set_occupying_piece(moved_piece)
-        moved_piece.move(row, col)
+    def move(self, piece, new_square):
+        old_square = piece.get_square()
+        old_square.set_occupying_piece(None)
+        new_square.set_occupying_piece(piece)
+        piece.move(new_square)
 
     def get_square(self, row, col):
         return self.board[row][col]
     
     def get_valid_moves(self, piece):
-        moves = piece.valid_moves(self)
+        moves = piece.valid_moves(self.list_of_squares)
         return moves
     
     def in_check(self):

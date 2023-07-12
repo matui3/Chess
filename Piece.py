@@ -11,8 +11,8 @@ class Piece:
         self.calc_pos()
 
     def calc_pos(self):
-        self.x = SQUARE_SIZE * self.col + SQUARE_SIZE // 2
-        self.y = SQUARE_SIZE * self.row + SQUARE_SIZE // 2
+        self.x = SQUARE_SIZE * self.square.col + SQUARE_SIZE // 2
+        self.y = SQUARE_SIZE * self.square.row + SQUARE_SIZE // 2
 
     def draw(self, win, white, black):
         if self.color == WHITE:
@@ -20,9 +20,8 @@ class Piece:
         else:
             win.blit(black, (self.x - black.get_width()//2, self.y - black.get_height()//2))
 
-    def move(self, old_square, new_square):
-        self.old_square = old_square
-        self.new_square = new_square
+    def move(self, new_square):
+        self.square = new_square
         self.calc_pos()
 
     def get_square(self):

@@ -10,7 +10,7 @@ class Bishop(Piece):
 
     def __init__(self, square,  color):
         super().__init__(square, color)
-        self.valid_moves = []
+        
 
     def calc_pos(self):
         super().calc_pos()
@@ -25,63 +25,63 @@ class Bishop(Piece):
 
     def valid_moves(self, board):
         valid_moves = []
-        positions = board.board_state()
+        # positions = board.board_state()
 
-        # thinking about how to handle check
-        # overlapping valid moves...
-        # diagonal for going up-left
-        current_col = self.col - 1
-        current_row = self.row - 1
-        piece = positions[current_row][current_col].get_piece()
-        while current_row > -1 and current_col > -1:
-            self.attacking_moves.append((current_row, current_col))
-            if piece != None and type(piece) != King and piece.color != self.color:
-                valid_moves.append((current_row, current_col))
-                break
-            else:
-                valid_moves.append((current_row, current_col))
-            current_col -= 1
-            current_row -= 1
+        # # thinking about how to handle check
+        # # overlapping valid moves...
+        # # diagonal for going up-left
+        # current_col = self.col - 1
+        # current_row = self.row - 1
+        # piece = positions[current_row][current_col].get_piece()
+        # while current_row > -1 and current_col > -1:
+        #     self.attacking_moves.append((current_row, current_col))
+        #     if piece != None and type(piece) != King and piece.color != self.color:
+        #         valid_moves.append((current_row, current_col))
+        #         break
+        #     else:
+        #         valid_moves.append((current_row, current_col))
+        #     current_col -= 1
+        #     current_row -= 1
             
-        # reset current_col counter
-        # diagonal for going up-right
-        current_col = self.col + 1
-        current_row = self.row - 1
-        while  current_row-1 > -1 and current_col+1 < COLS:
-            self.attacking_moves.append((current_row, current_col))
-            if piece != None and type(piece) != King and piece.color != self.color:
-                valid_moves.append((current_row, current_col))
-                break
-            else:
-                valid_moves.append((current_row, current_col))
-            current_col += 1
-            current_row -= 1
+        # # reset current_col counter
+        # # diagonal for going up-right
+        # current_col = self.col + 1
+        # current_row = self.row - 1
+        # while  current_row-1 > -1 and current_col+1 < COLS:
+        #     self.attacking_moves.append((current_row, current_col))
+        #     if piece != None and type(piece) != King and piece.color != self.color:
+        #         valid_moves.append((current_row, current_col))
+        #         break
+        #     else:
+        #         valid_moves.append((current_row, current_col))
+        #     current_col += 1
+        #     current_row -= 1
         
-        # diagonal for going down-right
-        current_col = self.col + 1
-        current_row = self.row + 1
-        while current_row < ROWS and current_col < COLS:
-            self.attacking_moves.append((current_row, current_col))
-            if piece != None and type(piece) != King and piece.color != self.color:
-                valid_moves.append((current_row, current_col))
-                break
-            else:
-                valid_moves.append((current_row, current_col))
-            current_col += 1
-            current_row += 1
+        # # diagonal for going down-right
+        # current_col = self.col + 1
+        # current_row = self.row + 1
+        # while current_row < ROWS and current_col < COLS:
+        #     self.attacking_moves.append((current_row, current_col))
+        #     if piece != None and type(piece) != King and piece.color != self.color:
+        #         valid_moves.append((current_row, current_col))
+        #         break
+        #     else:
+        #         valid_moves.append((current_row, current_col))
+        #     current_col += 1
+        #     current_row += 1
 
-        # diagonal for going down-left
-        current_col = self.col - 1
-        current_row = self.row + 1
-        while current_row < ROWS and current_col > -1:
-            self.attacking_moves.append((current_row, current_col))
-            if piece != None and type(piece) != King and piece.color != self.color:
-                valid_moves.append((current_row, current_col))
-                break
-            else:
-                valid_moves.append((current_row, current_col))
-            current_col += 1
-            current_row -= 1
+        # # diagonal for going down-left
+        # current_col = self.col - 1
+        # current_row = self.row + 1
+        # while current_row < ROWS and current_col > -1:
+        #     self.attacking_moves.append((current_row, current_col))
+        #     if piece != None and type(piece) != King and piece.color != self.color:
+        #         valid_moves.append((current_row, current_col))
+        #         break
+        #     else:
+        #         valid_moves.append((current_row, current_col))
+        #     current_col += 1
+        #     current_row -= 1
 
         return valid_moves
 

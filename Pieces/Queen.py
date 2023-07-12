@@ -26,13 +26,13 @@ class Queen(Piece):
 
     def valid_moves(self, board):
         valid_moves = []
-        diag_moves = Bishop.valid_moves(self, board)
-        linear_moves = Rook.valid_moves(self, board)
-        for move in diag_moves:
-            valid_moves.append(move)
-        for move in linear_moves:
-            valid_moves.append(move)
-        # diagonal for going up-left
+        # diag_moves = Bishop.valid_moves(self, board)
+        # linear_moves = Rook.valid_moves(self, board)
+        # for move in diag_moves:
+        #     valid_moves.append(move)
+        # for move in linear_moves:
+        #     valid_moves.append(move)
+        # # diagonal for going up-left
 
         return valid_moves
 

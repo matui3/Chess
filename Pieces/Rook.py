@@ -53,6 +53,7 @@ class Rook(Piece):
                     break
                 else:
                     valid_moves.append((row, self.col))
+    
         return valid_moves
 
 

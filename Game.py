@@ -9,14 +9,14 @@ class Game:
 
     def update(self):
         self.board.draw(self.win)
-        self.draw_valid_moves(self.valid_moves)
+        self.draw_valid_moves(self.valid_squares)
         pygame.display.update()
 
     def _init(self):
         self.selected = None
         self.board = Board()
         self.turn = WHITE
-        self.valid_moves = []
+        self.valid_squares = []
 
     def reset(self):
         self._init()
@@ -25,36 +25,41 @@ class Game:
         # grab piece from squaree and CALL self.select AGAIN
         # if this in valid moves, MOVE the piece
         # turn needs to END and repeat.
-        
         # selected piece
-        if self.selected:
-            result = self._move(row, col)
-            self.valid_moves = []
+        
+        selected_square = self.board.get_square(row, col) # this is a square
+
+
+        if self.selected != None: # self.selected will be none initially
+            result = self._move(selected_square) # this is the return value of the move method, this is a boolean
+            self.valid_squares = []
             
-            if not result:
+            if not result: # if the movement fails and isn't valid then reset everything and yeah.
                 self.selected = None
                 self.select(row, col)
        
-        piece = self.board.get_square(row, col).get_piece()
-        if piece != None and piece.color == self.turn:
-            self.selected = piece
-            self.valid_moves = self.board.get_valid_moves(piece)    
-            return piece        
-        return None
+        piece = selected_square.get_piece() # grab piece from selected square
+        if piece != None and piece.color == self.turn: # if there is a piece otherwise and it's your turn
+            self.selected = piece # the selected item is the piece
+            self.valid_squares = self.board.get_valid_moves(self.selected) # grab all valid moves of that piece  
+            return self.selected
+        return selected_square # returns the selected square if no piece
             
         
             
 
 
-    def _move(self, row, col):
-        square = self.board.get_square(row, col)
-        if self.selected and square.get_piece() == None and (row, col) in self.valid_moves:
-            self.board.move(self.selected, row, col)
+    def _move(self, selected_square):
+        
+        if self.selected and selected_square in self.valid_squares:
+            self.board.move(self.selected, selected_square)
             self.change_turn()
-        elif self.selected and square.get_piece() != None and (row, col) in self.valid_moves and self.selected.color != square.get_piece().color:
-            self.board.move(self.selected, row, col)
+            return True
+        elif self.selected and selected_square.get_piece() != None and selected_square in self.valid_squares and self.selected.color != selected_square.get_piece().color:
+            self.board.move(self.selected, selected_square)
             self.change_turn()
-        return square
+            return True
+        return False
         
         
     

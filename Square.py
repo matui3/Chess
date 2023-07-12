@@ -12,13 +12,18 @@ class Square:
         self.color = color
         self.rect = pygame.Rect(self.row * SQUARE_SIZE, self.col * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE)
         self.name = self.set_square_name(row, col)
+        self.file = FILES[col]
+        self.rank = row + 1;
+        self.piece_ref_list = []
 
     def set_square_name(self, row, col):
         return FILES[col] + str(row + 1)
     
-    def get_coord(self):
-        columns = 'ABCDEFGH'
-        return columns[self.col] + str(self.row + 1)
+    def get_file_idx(self):
+        return self.col        
+
+    def get_rank(self):
+        return self.rank
     
     def draw(self, win):
         if self.color == WHITE:
@@ -26,7 +31,9 @@ class Square:
         elif self.color == BLACK:
             pygame.draw.rect(win, self.color, self.rect)
 
-   
+    def get_piece_ref_list(self):
+        return self.piece_ref_list
+
     def get_color(self):
         return self.color
     
