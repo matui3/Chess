@@ -24,14 +24,40 @@ class Knight(Piece):
     def valid_moves(self, squares):
         
         valid_moves = []
-        curr_square = self.get_square()
         rank = self.rank
         file = self.file
 
+        # up 2 and right 1
         if (rank + 2 < 8 and file + 1 < 8):
             valid_moves.append(squares[FILES[file+1] + str(rank + 2)])
 
+        # up 2 and left 1
+        if (rank + 2 < 8 and file - 1 > -1):
+            valid_moves.append(squares[FILES[file-1] + str(rank + 2)])
 
+        # down 2 and right 1
+        if (rank - 2 < 8 and file + 1 < 8):
+            valid_moves.append(squares[FILES[file-1] + str(rank + 2)])
+
+        # down 2 and left 1
+        if (rank - 2 < 8 and file - 1 > -1):
+            valid_moves.append(squares[FILES[file-1] + str(rank + 2)])
+
+        # right 2 and up 1
+        if (rank + 1 < 8 and file + 2 < 8):
+            valid_moves.append(squares[FILES[file + 2] + str(rank + 1)])
+
+        # left 2 and up 1
+        if (rank + 1 < 8 and file - 2 > -1):
+            valid_moves.append(squares[FILES[file - 2] + str(rank + 1)])
+
+        # right 2 and down 1
+        if (rank - 1 > -1 and file + 2 < 8):
+            valid_moves.append(squares[FILES[file + 2] + str(rank - 1)])
+
+        # left 2 and down 1
+        if (rank - 1 > -1 and file - 2 > -1):
+            valid_moves.append(squares[FILES[file+2] + str(rank-1)])
         
         return valid_moves
 
