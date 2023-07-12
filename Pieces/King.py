@@ -3,7 +3,7 @@ import sys
 sys.path.append('..')
 
 from Piece import Piece
-from ChessConstants import BLACK_KING, WHITE_KING, WHITE, ROWS, COLS
+from ChessConstants import BLACK_KING, WHITE_KING, WHITE, ROWS, COLS, FILES
 
 class King(Piece):
 
@@ -30,49 +30,33 @@ class King(Piece):
 
     def valid_moves(self, squares):
         valid_moves = []
-        # current_row = self.row
-        # current_col = self.col
-        # positions = board.board_state()
-        # # check l/r of king
-        # if current_col - 1 > -1:
-        #     if positions[current_row][current_col-1].get_piece() == None:
-        #         valid_moves.append((current_row, current_col-1))
-        #     else:
-        #         valid_moves.append((current_row, current_col-1))
-    
-        # if current_col + 1 < COLS:
-        #     if positions[current_row][current_col + 1].get_piece() == None:
-        #         valid_moves.append((current_row, current_col - 1))
-        #     else:
-        #         valid_moves.append((current_row, current_col))
+        rank = self.rank
+        file = self.file
+
+        if (rank + 1 < 8 and file + 1 < 8):
+            valid_moves.append(squares[FILES[file + 1] + str(rank+1)])
+
+        if (rank + 1 < 8):
+            valid_moves.append(squares[FILES[self.file] + str(rank + 1)])
+
+        if (rank + 1 < 8 and file - 1 < 8):
+            valid_moves.append(squares[FILES[file - 1] + str(rank + 1)])
+
+        if (file + 1 < 8):
+            valid_moves.append(squares[FILES[file + 1] + str(self.rank)])
+
+        if (file - 1 > - 1):
+            valid_moves.append(squares[FILES[file - 1] + str(self.rank)])
+
+        if (rank - 1 > -1 and file + 1 < 8):
+            valid_moves.append(squares[FILES[file+1] + str(rank-1)])
+
+        if (rank -1 > -1):
+            valid_moves.append(squares[FILES[self.file] + str(rank - 1)])
+
+        if (rank - 1 > -1 and file - 1 > -1):
+            valid_moves.append(squares[FILES[file -1] + str(rank - 1)])
         
-        # if current_row - 1 > -1:
-        #     if positions[current_row - 1][current_col].get_piece() == None:
-        #         valid_moves.append((current_row -1, current_col))
-        
-        # if current_row + 1 < ROWS:
-        #     if positions[current_row + 1][current_col].get_piece() == None:
-        #         valid_moves.append((current_row + 1, current_col))
-
-        # if current_row - 1 > -1 and current_col - 1 > -1:
-        #     if positions[current_row - 1][current_col - 1].get_piece() == None:
-        #         valid_moves.append((current_row - 1, current_col))
-
-        # if current_row -1 > -1 and current_col + 1 < COLS:
-        #     if positions[current_row - 1][current_col + 1].get_piece() == None:
-        #         valid_moves.append((current_row -1, current_col + 1))
-
-        # if current_row + 1 < ROWS and current_col - 1 > -1:
-        #     if positions[current_row + 1][current_col - 1].get_piece() == None:
-        #         valid_moves.append((current_row + 1, current_col - 1))
-
-        # if current_row + 1 < ROWS and current_col + 1 < COLS:
-        #     if positions[current_row + 1][current_col + 1].get_piece() == None:
-        #         valid_moves.append((current_row + 1, current_col + 1))
-
-        # # figuring out how to not put yourself in check
-        
-
         return valid_moves
 
     def __repr__(self):
