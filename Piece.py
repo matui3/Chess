@@ -9,6 +9,8 @@ class Piece:
         self.y = 0
         self.selected_square = None
         self.calc_pos()
+        self.file = square.get_file_idx()
+        self.rank = square.get_rank()
 
     def calc_pos(self):
         self.x = SQUARE_SIZE * self.square.col + SQUARE_SIZE // 2

@@ -3,7 +3,7 @@ import sys
 sys.path.append('..')
 
 from Piece import Piece
-from ChessConstants import BLACK_BISHOP, WHITE_BISHOP, WHITE, BLACK, COLS, ROWS
+from ChessConstants import BLACK_BISHOP, WHITE_BISHOP, WHITE, BLACK, COLS, ROWS, FILES
 from .King import King
 
 class Bishop(Piece):
@@ -23,65 +23,51 @@ class Bishop(Piece):
         super().move(row, col)
 
 
-    def valid_moves(self, board):
+    def valid_moves(self, squares):
         valid_moves = []
-        # positions = board.board_state()
-
-        # # thinking about how to handle check
-        # # overlapping valid moves...
-        # # diagonal for going up-left
-        # current_col = self.col - 1
-        # current_row = self.row - 1
-        # piece = positions[current_row][current_col].get_piece()
-        # while current_row > -1 and current_col > -1:
-        #     self.attacking_moves.append((current_row, current_col))
-        #     if piece != None and type(piece) != King and piece.color != self.color:
-        #         valid_moves.append((current_row, current_col))
-        #         break
-        #     else:
-        #         valid_moves.append((current_row, current_col))
-        #     current_col -= 1
-        #     current_row -= 1
-            
-        # # reset current_col counter
-        # # diagonal for going up-right
-        # current_col = self.col + 1
-        # current_row = self.row - 1
-        # while  current_row-1 > -1 and current_col+1 < COLS:
-        #     self.attacking_moves.append((current_row, current_col))
-        #     if piece != None and type(piece) != King and piece.color != self.color:
-        #         valid_moves.append((current_row, current_col))
-        #         break
-        #     else:
-        #         valid_moves.append((current_row, current_col))
-        #     current_col += 1
-        #     current_row -= 1
+        curr_rank = self.rank
+        curr_file = self.file
         
-        # # diagonal for going down-right
-        # current_col = self.col + 1
-        # current_row = self.row + 1
-        # while current_row < ROWS and current_col < COLS:
-        #     self.attacking_moves.append((current_row, current_col))
-        #     if piece != None and type(piece) != King and piece.color != self.color:
-        #         valid_moves.append((current_row, current_col))
-        #         break
-        #     else:
-        #         valid_moves.append((current_row, current_col))
-        #     current_col += 1
-        #     current_row += 1
+        # moving to the right and up
+        while (curr_rank + 1 < ROWS and curr_file + 1 < COLS):
+            curr_file += 1
+            curr_rank += 1
+            if (squares[FILES[curr_file] + str(curr_rank)].get_piece()) == None:
+                valid_moves.append(squares[FILES[curr_file] + str(curr_rank)])
+            else:
+                valid_moves.append(squares[FILES[curr_file] + str(curr_rank)])
+                break
+        
+        # moving left and up
+        while (curr_rank + 1 < ROWS and curr_file - 1 > -1):
+            curr_file -= 1
+            curr_rank += 1
+            if (squares[FILES[curr_file] + str(curr_rank)].get_piece()) == None:
+                valid_moves.append(squares[FILES[curr_file] + str(curr_rank)])
+            else:
+                valid_moves.append(squares[FILES[curr_file] + str(curr_rank)])
+                break
 
-        # # diagonal for going down-left
-        # current_col = self.col - 1
-        # current_row = self.row + 1
-        # while current_row < ROWS and current_col > -1:
-        #     self.attacking_moves.append((current_row, current_col))
-        #     if piece != None and type(piece) != King and piece.color != self.color:
-        #         valid_moves.append((current_row, current_col))
-        #         break
-        #     else:
-        #         valid_moves.append((current_row, current_col))
-        #     current_col += 1
-        #     current_row -= 1
+        # moving down and right
+
+        while (curr_rank - 1 > -1 and curr_file + 1 < COLS):
+            curr_file += 1
+            curr_rank -= 1
+            if (squares[FILES[curr_file] + str(curr_rank)].get_piece()) == None:
+                valid_moves.append(squares[FILES[curr_file] + str(curr_rank)])
+            else:
+                valid_moves.append(squares[FILES[curr_file] + str(curr_rank)])
+                break
+
+        # moving down and to the left
+        while (curr_rank - 1 > - 1 and curr_file - 1 > -1):
+            curr_file -= 1
+            curr_rank -= 1
+            if (squares[FILES[curr_file] + str(curr_rank)].get_piece()) == None:
+                valid_moves.append(squares[FILES[curr_file] + str(curr_rank)])
+            else:
+                valid_moves.append(squares[FILES[curr_file] + str(curr_rank)])
+                break
 
         return valid_moves
 
@@ -105,7 +91,7 @@ class Bishop(Piece):
         # diagonal for going up-right
         current_col = self.col + 1
         current_row = self.row - 1
-        while  current_row-1 > -1 and current_col+1 < COLS:
+        while current_row-1 > -1 and current_col+1 < COLS:
             attacking_moves.append((current_row, current_col))
             current_col += 1
             current_row -= 1

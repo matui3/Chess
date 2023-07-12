@@ -28,7 +28,7 @@ class King(Piece):
         super().move(row, col)
 
 
-    def valid_moves(self, board):
+    def valid_moves(self, squares):
         valid_moves = []
         # current_row = self.row
         # current_col = self.col

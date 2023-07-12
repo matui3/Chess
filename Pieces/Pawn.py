@@ -5,7 +5,7 @@ sys.path.append('..')
 
 
 from Piece import Piece
-from ChessConstants import WHITE_PAWN, BLACK_PAWN, WHITE, BLACK, ROWS, COLS, FILES
+from ChessConstants import WHITE_PAWN, BLACK_PAWN, BLACK, FILES
 
 class Pawn(Piece):
 
@@ -21,49 +21,43 @@ class Pawn(Piece):
     def draw(self, win):
         super().draw(win, WHITE_PAWN, BLACK_PAWN)
 
-    def move(self, row, col):
-        super().move(row, col)
+    def move(self, new_square):
+        super().move(new_square)
  
 
-    def _moves_based_on_color(self, current_square, valid_moves, color, squares):
-        file = current_square.get_file_idx()
-        rank = current_square.get_rank()
-        direction = -1 if color == BLACK else 1
-        if squares[FILES[file] + str(rank + direction * 1)]:
-            if squares[FILES[file] + str(rank + direction * 1)].get_piece() == None:
-                valid_moves.append(squares[FILES[file] + str(rank + direction * 1)])
-            if squares[FILES[file] + str(rank + direction * 2)]:
-                if squares[FILES[file] + str(rank + direction * 2)].get_piece() == None and self.first_move:
-                    valid_moves.append(squares[file + str(rank + direction * 2)])
+    def _moves_based_on_color(self, valid_moves, squares, direction):
         
+        if (self.rank + direction * 1 < 8 and self.rank + direction * 1 > -1):
+            if squares[FILES[self.file] + str(self.rank + direction * 1)].get_piece() == None:
+                valid_moves.append(squares[FILES[self.file] + str(self.rank + direction * 1)])
+                if squares[FILES[self.file] + str(self.rank + direction * 2)].get_piece() == None and self.first_move:
+                    valid_moves.append(squares[FILES[self.file] + str(self.rank + direction * 2)])
         # below is for a pawn capturing on the right
-        
-        if squares[FILES[file + 1] + str(rank + direction * 1)]:
-            if squares[FILES[file] + str(rank + direction * 1)].get_piece() != None:
-                valid_moves.append(squares(FILES[file + 1] + str(rank + direction * 1)))
-
-        if squares[FILES[file - 1] + str(rank + direction * 1)]:
-            if squares[FILES[file] + str(rank + direction * 1)].get_piece() != None:
-                valid_moves.append(squares(FILES[file - 1] + str(rank + direction * 1)))
+        # self.attacking_moves(valid_moves, squares, direction)
 
 
 
     def valid_moves(self, squares) -> list:
-        current_square = self.get_square()
         valid_moves = []
-        self._moves_based_on_color(current_square, valid_moves, self.color, squares)
+        direction = -1 if self.color == BLACK else 1
+        self._moves_based_on_color(valid_moves, squares, direction)
         return valid_moves
                         
     def __repr__(self):
         return super().__repr__() + ' P'
     
 
-    # will restructure this later
-    def attacking_moves(self, board):
+    def attacking_moves(self, valid_moves, squares, direction):
         attacking_moves = []
-        if self.col + 1 < COLS and self.row - 1 > -1:
-            attacking_moves.append((self.row-1, self.col + 1))
-        if self.row - 1 > -1 and self.col - 1 > -1:
-            attacking_moves.append((self.row-1, self.col))
-
+        # this should check the right file
+        if (self.file + 1 < 8) and (self.rank + direction * 1 < 8 and self.rank + direction * 1 > -1):
+            if squares[FILES[self.file + 1] + str(self.rank + direction * 1)].get_piece() != None:
+               valid_moves.append(squares(FILES[self.file + 1] + str(self.rank + direction * 1)))
+               attacking_moves.append(squares(FILES[self.file + 1] + str(self.rank + direction * 1)))
+        # this checks diagonal to the left
+        if (self.file + 1 < 8) and (self.rank + direction * 1 < 8 and self.rank + direction * 1 > -1):
+            if squares[FILES[self.file] + str(self.rank + direction * 1)].get_piece() != None:
+                valid_moves.append(squares(FILES[self.file - 1] + str(self.rank + direction * 1)))
+                attacking_moves.append(squares(FILES[self.file - 1] + str(self.rank + direction * 1)))
+                
         return attacking_moves

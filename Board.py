@@ -24,8 +24,6 @@ class Board:
         self.board = []
         self.list_of_squares = {}
         self.check = False
-        self.white_king = None
-        self.black_king = None
         self.config = [['R','N','B','Q','K','B','N','R'],
                        ['P','P','P','P','P','P','P','P'],
                        [' ',' ',' ',' ',' ',' ',' ',' '],
@@ -36,41 +34,34 @@ class Board:
                        ['R','N','B','Q','K','B','N','R']]
         self.list_of_black_pieces = []
         self.list_of_white_pieces = []
-        self.create_squares_for_board()
-        self.insert_squares()
-        self.set_up_board()
+        self.setup_board()
+        self.setup_pieces()
 
     # is there a different way to draw this checkerboard
 
-    def create_squares_for_board(self):
+    def setup_board(self):
         row = 0
-        for rank in range(8, 0, -1):
+        for rank in range(ROWS, 0, -1):
+            self.board.append([])
             col = 0
             for letter in FILES:
                 name = letter + str(rank)
                 if row % 2 == 0 and col % 2 == 0:
                     self.list_of_squares[name] = Square(row, col, WHITE)
+                    self.board[row].append(self.list_of_squares[name])
                 elif row % 2 == 1 and col % 2 == 1:
                     self.list_of_squares[name] = Square(row, col, WHITE)
+                    self.board[row].append(self.list_of_squares[name])
                 else:
                     self.list_of_squares[name] = Square(row, col, BLACK)
+                    self.board[row].append(self.list_of_squares[name])
                 col += 1
             row += 1
 
     def list_of_squares(self):
         return self.list_of_squares
 
-    def insert_squares(self):
-        squares = list(self.list_of_squares.values())
-        idx = 0
-        for row in range(ROWS):
-            self.board.append([])
-            for col in range(COLS):
-                self.board[row].append(squares[idx])
-                idx += 1
-
-
-    def set_up_board(self):
+    def setup_pieces(self):
         self.board[0][0].set_occupying_piece(Rook(self.list_of_squares['A8'], BLACK))
         self.board[0][1].set_occupying_piece(Knight(self.list_of_squares['B8'], BLACK))
         self.board[0][2].set_occupying_piece(Bishop(self.list_of_squares['C8'], BLACK))
@@ -110,12 +101,28 @@ class Board:
     # temporary function
     def board_state(self):
         return self.board
+    
+
 
     def move(self, piece, new_square):
+        
         old_square = piece.get_square()
         old_square.set_occupying_piece(None)
+        # check all the piece references from this square
+        attacking_pieces = old_square.get_piece_reference_list()
+        for chess_piece in attacking_pieces:
+            possible_moves = chess_piece.valid_moves(self.list_of_squares)
+            for square in possible_moves:
+                if square.get_piece() is King:
+                    self.in_check()
+                    old_square.set_occupying_piece(piece)
+                    return False
+                    # king is now in check and move returns false
+         # board changes here
+
         new_square.set_occupying_piece(piece)
         piece.move(new_square)
+        return True
 
     def get_square(self, row, col):
         return self.board[row][col]
@@ -125,31 +132,7 @@ class Board:
         return moves
     
     def in_check(self):
-        white_king_pos = self.white_king.king_position()
-        black_king_pos = self.black_king.king_position()
-        if self.selected:
-            danger_spots = self.selected.attacking_moves()
-            self._no_pieces_to_check(white_king_pos, WHITE, self.white_king, danger_spots)
-            self._no_pieces_to_check(black_king_pos, BLACK, self.black_king, danger_spots)
+        self.check = not self.check
+        return self.check
             
-    def _no_piece_obstacles_check(self, king_pos, color, king, attacking_moves):       
-        if self.turn == color:
-            for row, col in enumerate(attacking_moves):
-                piece = self.board[row][col].get_piece()
-                if piece == None:
-                    if king_pos in attacking_moves and king.color != self.selected.color:
-                        self.check = king.change_check_status()
-
-
-    def _absolute_pin_for_valid_moves(self, attacking_moves, king_pos):
-        for row, col in enumerate(attacking_moves):
-            piece = self.board[row][col].get_piece()
-            if piece != None and type(piece) != type(self.black_king) and king_pos in attacking_moves:
-                return True
-        return False
-        
-
-    def _discovery_checks(self, list_of_pieces, king):
-        for piece in list_of_pieces:
-            # if piece.
-            pass
+   

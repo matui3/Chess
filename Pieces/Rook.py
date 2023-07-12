@@ -3,12 +3,13 @@ import sys
 sys.path.append('..')
 
 from Piece import Piece
-from ChessConstants import BLACK_ROOK, WHITE_ROOK, WHITE, COLS, ROWS
+from ChessConstants import BLACK_ROOK, WHITE_ROOK, WHITE, COLS, ROWS, FILES
 
 class Rook(Piece):
 
     def __init__(self, square, color):
         super().__init__(square, color)
+        self.first_move = True
 
     def calc_pos(self):
         super().calc_pos()
@@ -19,75 +20,49 @@ class Rook(Piece):
     def move(self, row, col):
         super().move(row, col)
 
-    def valid_moves(self, board):
-        valid_moves = [] # this will store a row, col
-        # current pos is self.row, self.col
-        positions = board.board_state()
-        if self.col > 0:
-            for col in range(self.col-1, -1, -1):
-                if positions[self.row][col].get_piece() != None:
-                    valid_moves.append((self.row, col))
-                    break
-                else:
-                    valid_moves.append((self.row, col))
-        if self.col < COLS:
-            for col in range(self.col+1, COLS, 1):
-                if positions[self.row][col].get_piece() != None:
-                    valid_moves.append((self.row, col))
-                    break
-                else:
-                    valid_moves.append((self.row, col))
-
-        if self.row > 0:
-            for row in range(self.row - 1, -1, -1):
-                if positions[row][self.col].get_piece() != None:
-                    valid_moves.append((row, self.col))
-                    break
-                else:
-                    valid_moves.append((row, self.col))
-
-        if self.row < ROWS:
-            for row in range(self.row + 1, ROWS, 1):
-                if positions[row][self.col].get_piece() != None:
-                    valid_moves.append((row, self.col))
-                    break
-                else:
-                    valid_moves.append((row, self.col))
-    
-        return valid_moves
-
-
+    def valid_moves(self, squares):
+        valid_moves = []
+        # before we check if a move is valid, we also need to look does this result in a king being in check? how do i check that... 
+        # check all the squares up/left/right/down
+        # I have a dictionary of all my squares
+        # check everything in a file
+        for rank in range(self.rank, ROWS + 1, 1):
+            if squares[FILES[self.file] + str(rank)].get_piece() == None:
+                squares[FILES[self.file + str(rank)]].update_piece_reference_list(self)
+                valid_moves.append(squares[FILES[self.file] + str(rank)])
+            if squares[FILES[self.file] + str(rank)].get_piece() != None:
+                squares[FILES[self.file] + str(rank)].update_piece_reference_list(self)
+                valid_moves.append(squares[FILES[self.file]])
+                break
         
+        for rank in range(self.rank, 0, -1):
+            if squares[FILES[self.file] + str(rank)].get_piece() == None:
+                squares[FILES[self.file + str(rank)]].update_piece_reference_list(self)
+                valid_moves.append(squares[FILES[self.file] + str(rank)])
+            if squares[FILES[self.file] + str(rank)].get_piece() != None:
+                squares[FILES[self.file] + str(rank)].update_piece_reference_list(self)
+                valid_moves.append(squares[FILES[self.file]])
+                break
+        
+        for file in range(self.file, COLS  + 1, 1):
+            if squares[FILES[file] + str(self.rank)].get_piece() == None:
+                squares[FILES[self.file] + str(rank)].update_piece_reference_list(self)
+                valid_moves.append(squares[FILES[file] + str(self.rank)])
+            if squares[FILES[file] + str(self.rank)].get_piece() != None:
+                squares[FILES[self.file] + str(rank)].update_piece_reference_list(self)
+                valid_moves.append(squares[FILES[self.file]])
+                break
+
+        for file in range(self.file, 0, -1):
+            if squares[FILES[file] + str(self.rank)].get_piece() == None:
+                squares[FILES[self.file + str(rank)]].update_piece_reference_list(self)
+                valid_moves.append(squares[FILES[file] + str(self.rank)])
+            if squares[FILES[file] + str(self.rank)].get_piece() != None:
+                squares[FILES[self.file + str(rank)]].update_piece_reference_list(self)
+                valid_moves.append(squares[FILES[file] + str(self.rank)])
+                break
+
+        return valid_moves
 
     def __repr__(self):
         return super().__repr__() + ' R'
-    
-    def attacking_moves_left(self):
-        attacking_moves = []
-        # this will store a row, col
-        # current pos is self.row, self.col
-        if self.col > 0:
-            for col in range(self.col-1, -1, -1):
-                attacking_moves.append((self.row, col))
-        return attacking_moves
-    
-    def attacking_moves_right(self):
-        attacking_moves = []
-        if self.col < COLS:
-            for col in range(self.col+1, COLS, 1):
-                attacking_moves.append((self.row, col))
-        return attacking_moves
-    
-    def attacking_moves_up(self):
-        attacking_moves = []
-        if self.row > 0:
-            for row in range(self.row - 1, -1, -1):
-                attacking_moves.append((row, self.col))
-        return attacking_moves
-
-    def attacking_moves_down(self):
-        attacking_moves = []
-        if self.row < ROWS:
-            for row in range(self.row + 1, ROWS, 1):
-                attacking_moves.append((row, self.col))
-        return attacking_moves

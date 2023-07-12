@@ -11,18 +11,24 @@ class Square:
         self._occupying_piece = None
         self.color = color
         self.rect = pygame.Rect(self.row * SQUARE_SIZE, self.col * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE)
-        self.name = self.set_square_name(row, col)
         self.file = FILES[col]
-        self.rank = row + 1;
-        self.piece_ref_list = []
+        self.rank = 8 - row;
+        self.name = self.set_square_name()
+        self.piece_reference_list = []
 
-    def set_square_name(self, row, col):
-        return FILES[col] + str(row + 1)
+    def set_square_name(self):
+        return self.file + str(self.rank)
     
-    def get_file_idx(self):
+    def update_piece_reference_list(self, piece):
+        self.piece_reference_list.append(piece)
+    
+    def get_piece_reference_list(self):
+        return self.piece_reference_list
+
+    def get_file_idx(self) -> int:
         return self.col        
 
-    def get_rank(self):
+    def get_rank(self) -> int:
         return self.rank
     
     def draw(self, win):
