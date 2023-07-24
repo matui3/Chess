@@ -114,20 +114,17 @@ class Board:
     
     def get_valid_moves(self, piece):
         moves = piece.valid_moves(self.list_of_squares)
-        old_square = piece.get_square()
-        # old_square.set_occupying_piece(None)
-        # check all the piece references from this square
-        # this is for check
-        attacking_pieces = old_square.get_piece_reference_list()
-        for chess_piece in attacking_pieces:
-            possible_moves = chess_piece.valid_moves(self.list_of_squares)
-            for square in possible_moves:
-                if square.get_piece() is King:
-                    moves.remove(square)
-                    old_square.set_occupying_piece(piece)
+        # to determine check
+        
+        
         return moves
     
-    def in_check(self):
+    def _in_check(self, moves):
+        for square in moves:
+            attacking_pieces = square.get_piece_reference_list()
+            for piece in attacking_pieces:
+                # what are the moves this piece has?
+                attacked_squares = piece.valid_moves(self.list_of_squares, square.get_file_idx(), square.get_rank())
         self.check = not self.check
         return self.check
             

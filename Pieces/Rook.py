@@ -66,3 +66,39 @@ class Rook(Piece):
 
     def __repr__(self):
         return super().__repr__() + ' R'
+    
+    def attacked_squares(self, squares, rank, file):
+        valid_moves = []
+        # before we check if a move is valid, we also need to look does this result in a king being in check? how do i check that... 
+        # check all the squares up/left/right/down
+        # I have a dictionary of all my squares
+        # check everything in a file
+        for curr_rank in range(rank, ROWS + 1, 1):
+            if squares[FILES[file] + str(curr_rank)].get_piece() == None:
+                valid_moves.append(squares[FILES[file] + str(rank)])
+            if squares[FILES[file] + str(rank)].get_piece() != None:
+                valid_moves.append(squares[FILES[file]])
+                break
+        
+        for curr_rank in range(rank, 0, -1):
+            if squares[FILES[file] + str(curr_rank)].get_piece() == None:
+                valid_moves.append(squares[FILES[file] + str(rank)])
+            if squares[FILES[file] + str(curr_rank)].get_piece() != None:
+                valid_moves.append(squares[FILES[file]])
+                break
+        
+        for curr_file in range(file, COLS + 1, 1):
+            if squares[FILES[curr_file] + str(rank)].get_piece() == None:
+                valid_moves.append(squares[FILES[curr_file] + str(rank)])
+            if squares[FILES[curr_file] + str(rank)].get_piece() != None:
+                valid_moves.append(squares[FILES[curr_file]])
+                break
+
+        for curr_file in range(file, 0, -1):
+            if squares[FILES[curr_file] + str(rank)].get_piece() == None:
+                valid_moves.append(squares[FILES[curr_file] + str(rank)])
+            if squares[FILES[curr_file] + str(rank)].get_piece() != None:
+                valid_moves.append(squares[FILES[curr_file] + str(rank)])
+                break
+
+        return valid_moves

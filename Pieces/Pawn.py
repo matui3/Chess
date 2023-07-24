@@ -61,3 +61,18 @@ class Pawn(Piece):
                 attacking_moves.append(squares(FILES[self.file - 1] + str(self.rank + direction * 1)))
                 
         return attacking_moves
+    
+    def attacking_moves(self, valid_moves, squares, direction, rank, file):
+        attacking_moves = []
+        # this should check the right file
+        if (self.file + 1 < 8) and (self.rank + direction * 1 < 8 and self.rank + direction * 1 > -1):
+            if squares[FILES[self.file + 1] + str(self.rank + direction * 1)].get_piece() != None:
+               valid_moves.append(squares(FILES[self.file + 1] + str(self.rank + direction * 1)))
+               attacking_moves.append(squares(FILES[self.file + 1] + str(self.rank + direction * 1)))
+        # this checks diagonal to the left
+        if (self.file + 1 < 8) and (self.rank + direction * 1 < 8 and self.rank + direction * 1 > -1):
+            if squares[FILES[self.file] + str(self.rank + direction * 1)].get_piece() != None:
+                valid_moves.append(squares(FILES[self.file - 1] + str(self.rank + direction * 1)))
+                attacking_moves.append(squares(FILES[self.file - 1] + str(self.rank + direction * 1)))
+                
+        return attacking_moves

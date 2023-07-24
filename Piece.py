@@ -15,6 +15,8 @@ class Piece:
     def calc_pos(self):
         self.x = SQUARE_SIZE * self.square.col + SQUARE_SIZE // 2
         self.y = SQUARE_SIZE * self.square.row + SQUARE_SIZE // 2
+        self.file = self.square.get_file_idx()
+        self.rank = self.square.get_rank()
 
     def draw(self, win, white, black):
         if self.color == WHITE:
