@@ -116,7 +116,6 @@ class Board:
         moves = piece.valid_moves(self.list_of_squares)
         # to determine check
         
-        
         return moves
     
     def _in_check(self, moves):
