@@ -123,8 +123,9 @@ class Board:
             attacking_pieces = square.get_piece_reference_list()
             for piece in attacking_pieces:
                 # what are the moves this piece has?
-                attacked_squares = piece.valid_moves(self.list_of_squares, square.get_file_idx(), square.get_rank())
-        self.check = not self.check
+                for square in piece.valid_moves(self.list_of_squares):
+                    if square.get_piece() == King:
+                        self.check = not self.check
         return self.check
             
    
