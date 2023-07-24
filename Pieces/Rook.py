@@ -3,7 +3,7 @@ import sys
 sys.path.append('..')
 
 from Piece import Piece
-from ChessConstants import BLACK_ROOK, WHITE_ROOK, WHITE, COLS, ROWS, FILES
+from ChessConstants import BLACK_ROOK, WHITE_ROOK, COLS, ROWS, FILES
 
 class Rook(Piece):
 
@@ -17,8 +17,8 @@ class Rook(Piece):
     def draw(self, win):
         super().draw(win, WHITE_ROOK, BLACK_ROOK)
 
-    def move(self, row, col):
-        super().move(row, col)
+    def move(self, new_square):
+        super().move(new_square)
 
     def valid_moves(self, squares):
         valid_moves = []

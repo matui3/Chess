@@ -101,34 +101,30 @@ class Board:
     # temporary function
     def board_state(self):
         return self.board
-    
-
 
     def move(self, piece, new_square):
-        
         old_square = piece.get_square()
-        old_square.set_occupying_piece(None)
-        # check all the piece references from this square
-        attacking_pieces = old_square.get_piece_reference_list()
-        for chess_piece in attacking_pieces:
-            possible_moves = chess_piece.valid_moves(self.list_of_squares)
-            for square in possible_moves:
-                if square.get_piece() is King:
-                    self.in_check()
-                    old_square.set_occupying_piece(piece)
-                    return False
-                    # king is now in check and move returns false
-         # board changes here
-
         new_square.set_occupying_piece(piece)
+        old_square.set_occupying_piece(None)
         piece.move(new_square)
-        return True
+        
 
     def get_square(self, row, col):
         return self.board[row][col]
     
     def get_valid_moves(self, piece):
         moves = piece.valid_moves(self.list_of_squares)
+        old_square = piece.get_square()
+        # old_square.set_occupying_piece(None)
+        # check all the piece references from this square
+        # this is for check
+        attacking_pieces = old_square.get_piece_reference_list()
+        for chess_piece in attacking_pieces:
+            possible_moves = chess_piece.valid_moves(self.list_of_squares)
+            for square in possible_moves:
+                if square.get_piece() is King:
+                    moves.remove(square)
+                    old_square.set_occupying_piece(piece)
         return moves
     
     def in_check(self):

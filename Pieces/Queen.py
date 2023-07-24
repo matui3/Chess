@@ -20,8 +20,8 @@ class Queen(Piece):
     def draw(self, win):
         super().draw(win, WHITE_QUEEN, BLACK_QUEEN)
 
-    def move(self, row, col):
-        super().move(row, col)
+    def move(self, new_square):
+        super().move(new_square)
   
 
     def valid_moves(self, squares):

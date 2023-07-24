@@ -23,9 +23,9 @@ class King(Piece):
     def draw(self, win):
         super().draw(win, WHITE_KING, BLACK_KING)
 
-    def move(self, row, col):
+    def move(self, new_square):
         self.first_move = False
-        super().move(row, col)
+        super().move(new_square)
 
 
     def valid_moves(self, squares):

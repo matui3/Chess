@@ -19,6 +19,9 @@ class Square:
     def set_square_name(self):
         return self.file + str(self.rank)
     
+    def __str__(self):
+        return self.file + str(self.rank)
+
     def update_piece_reference_list(self, piece):
         self.piece_reference_list.append(piece)
     
